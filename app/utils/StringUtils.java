@@ -21,7 +21,7 @@ public class StringUtils {
 	 * 获得用户激活码
 	 * @return
 	 */
-	public static String get_activecode(){
+	public static String get_verifycode(){
 		//TODO 随机生成激活码
 		return "";
 	}
