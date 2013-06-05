@@ -5,6 +5,9 @@ import java.util.List;
 import models.user.User;
 import models.user.VerifyCode;
 
+import org.apache.commons.mail.Email;
+import org.apache.commons.mail.SimpleEmail;
+
 
 /**
  * 发送工具类
@@ -23,7 +26,7 @@ public class SendUtils {
 	 * @param content
 	 */
 	public static void mail(String email, String subject, String content){
-		
+		Email mail = new SimpleEmail();
 	}
 	
 	/**

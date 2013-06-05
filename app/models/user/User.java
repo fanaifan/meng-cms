@@ -207,12 +207,17 @@ public class User extends Model {
 	
 	/**
 	 * 检验验证邮箱
-	 * @param email
+	 * @param username
 	 * @param verify_code
 	 * @return
 	 */
-	public static boolean verify_email(String email, String verify_code){
-		//TODO 获取邮箱验证码匹配
+	public static boolean verify_email(String username, String verify_code){
+		if(verify_code.equals(VerifyCode.getVerify_Email_Code(username))){
+			User u = getUserByName(username);
+			u.verify_email = true;
+			modifyUserInfo(u);
+			return true;
+		}
 		return false;
 	}
 	
@@ -226,12 +231,17 @@ public class User extends Model {
 	
 	/**
 	 * 检验验证移动电话
-	 * @param mobile
+	 * @param username
 	 * @param verify_code
 	 * @return
 	 */
-	public static boolean verify_mobile(String mobile, String verify_code){
-		//TODO 获取邮箱验证码匹配
+	public static boolean verify_mobile(String username, String verify_code){
+		if(verify_code.equals(VerifyCode.getVerify_Mobile_Code(username))){
+			User u = getUserByName(username);
+			u.verify_mobile = true;
+			modifyUserInfo(u);
+			return true;
+		}
 		return false;
 	}
 

@@ -1,5 +1,10 @@
 package utils;
 
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.RandomStringUtils;
+
+
+
 /**
  * 字符串工具类
  * @author zhangpeng
@@ -7,14 +12,16 @@ package utils;
  */
 public class StringUtils {
 
+	public static void main(String[] args){
+		System.out.println(get_verifycode());
+	}
 	/**
 	 * md5加密
 	 * @param str
 	 * @return
 	 */
 	public static String md5(String str){
-		//TODO 进行md5加密
-		return "";
+		return DigestUtils.md5Hex(str);
 	}
 	
 	/**
@@ -22,7 +29,6 @@ public class StringUtils {
 	 * @return
 	 */
 	public static String get_verifycode(){
-		//TODO 随机生成激活码
-		return "";
+		return RandomStringUtils.randomAlphabetic(10);
 	}
 }
