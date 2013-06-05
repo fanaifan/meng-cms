@@ -127,11 +127,17 @@ public class SendUtils {
 	 * @param activecode
 	 */
 	public static void mail_active_user(String email){
+		
 		String code = saveVerifyCode(email,"A");
+		String herf = Messages.get("user.active.herf", "");
+		String ahtml = "<a href='"+herf + code+"'>"+Messages.get("user.active.btn", "")+"</a>";
+		String text = Messages.get("user.active.text", herf + code);
+		
 		String emailSubject = Messages.get("user.active.subject", "");
-//		String emailContent = Messages.get("user.active.msg", User.getUserByEmail(email).username, AppConfig.WebSiteName, code);
+		String htmlContent = Messages.get("user.active.msg", User.getUserByEmail(email).username, AppConfig.WebSiteName, ahtml);
+		String textContent = Messages.get("user.active.msg", User.getUserByEmail(email).username, AppConfig.WebSiteName, text);
 		try {
-			mail(email, emailSubject, StringUtils.readMessage());
+			mailHtml(email, emailSubject, htmlContent, textContent);
 			Logger.info("email sent ...");
 		} catch (EmailException e) {
 			Logger.info(Messages.get("error.mail.send", ""));
@@ -144,7 +150,22 @@ public class SendUtils {
 	 * @param email
 	 */
 	public static void mail_verify_email(String email){
-//		String code = saveVerifyCode(email,"E");
+		
+		String code = saveVerifyCode(email,"E");
+		String herf = Messages.get("email.verify.herf", "");
+		String ahtml = "<a href='"+herf + code+"'>"+Messages.get("email.verify.btn", "")+"</a>";
+		String text = Messages.get("email.verify.text", herf + code);
+		
+		String emailSubject = Messages.get("email.verify.subject", "");
+		String htmlContent = Messages.get("email.verify.msg", User.getUserByEmail(email).username, AppConfig.WebSiteName, ahtml);
+		String textContent = Messages.get("email.verify.msg", User.getUserByEmail(email).username, AppConfig.WebSiteName, text);
+		try {
+			mailHtml(email, emailSubject, htmlContent, textContent);
+			Logger.info("email sent ...");
+		} catch (EmailException e) {
+			Logger.info(Messages.get("error.mail.send", ""));
+			e.printStackTrace();
+		}
 	}
 	
 	/**

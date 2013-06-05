@@ -7,8 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.avaje.ebean.Ebean;
+
 import play.Logger;
 import play.db.ebean.Model;
+import play.i18n.Messages;
 import utils.SendUtils;
 import utils.StringUtils;
 
@@ -133,18 +136,37 @@ public class User extends Model {
 	 */
 	public static boolean login(String userinfo, String password){
 		password = StringUtils.md5(password);
-		
-		User u_name = getUserByName(userinfo);
-		User u_email = getUserByEmail(userinfo);
-		User u_mobile = getUserByMobile(userinfo);
-		if(u_name != null || u_email != null || u_mobile != null){
-			if(u_name.password.equals(password)){
-				return true;
-			}
-			Logger.info("密码错误");
+
+		if (verify_pwd(getUserByName(userinfo),password)) {
+			return true;
+		} else if (verify_pwd(getUserByEmail(userinfo),password)) {
+			return true;
+		} else if (verify_pwd(getUserByMobile(userinfo),password)) {
+			return true;
 		}
-		Logger.info("用户信息错误");	
 		return false;
+	}
+	
+	/**
+	 * 用户登录验证密码和是否可用(辅助方法)
+	 * @param user
+	 * @param password
+	 * @return
+	 */
+	private static boolean verify_pwd(User user,String password){
+		if ( user == null ) {
+			Logger.info(Messages.get("login.user.nothing", ""));
+			return false;
+		}
+		if(!user.password.equals(password)){
+			Logger.info(Messages.get("login.password.error", ""));
+			return false;
+		}
+		if(user.status == false){
+			Logger.info(Messages.get("login.user.disable", ""));
+			return false;
+		}
+		return true;
 	}
 	
 	/**
@@ -270,6 +292,23 @@ public class User extends Model {
 		u.save();
 	}
 	
+	/**
+	 * 删除用户信息(从数据库中删除)
+	 * @param username
+	 */
+	public static void destroyUser(String username){
+		Ebean.delete(find.where().eq("username", username).findList());
+	}
+	
+	/**
+	 * 标识用户不可用
+	 * @param username
+	 */
+	public static void disableUser(String username){
+		User user = getUserByName(username);
+		user.status = false;
+		user.save();
+	}
 	
 
 }

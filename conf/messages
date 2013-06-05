@@ -1,6 +1,21 @@
-#Message
+#User Active
 user.active.subject=用户激活
-user.active.msg=您好{0}欢迎您注册{1}请点击链接{2}激活
+user.active.msg=您好,{0}:<br>欢迎您注册{1},请{2}激活
+user.active.btn=点击这里
+user.active.text=请将链接{0}复制到浏览器激活用户
+user.active.herf=http://www.meng-cms.com/active/user/
+
+#Verify Email
+email.verify.subject=验证邮箱
+email.verify.msg=您好,{0}:<br>欢迎您使用{1},请{2}验证电子邮箱
+email.verify.btn=点击这里
+email.verify.text=请将链接{0}复制到浏览器验证邮箱
+email.verify.herf=http://www.meng-cms.com/verify/herf/
+
+#User Login
+login.password.error=用户密码错误
+login.user.nothing=用户信息不存在
+login.user.disable=用户不可用或者没有激活
 
 #Error Message
 error.email.send=发送电子邮箱失败

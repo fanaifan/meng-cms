@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.avaje.ebean.Ebean;
+
 import play.db.ebean.Model;
 
 
@@ -64,6 +66,7 @@ public class VerifyCode extends Model {
 	public static void saveVerifyCode(VerifyCode vc){
 		if(getVCByUsername(vc.username) != null){
 			modifyVerifyCode(vc);
+			return;
 		}
 		vc.save();
 	}
@@ -74,13 +77,13 @@ public class VerifyCode extends Model {
 	 */
 	public static void modifyVerifyCode(VerifyCode vc){
 		VerifyCode vcode = getVCByUsername(vc.username);
-		if(!vcode.active_code.equals(vc.active_code)){
+		if(vcode.active_code == null || !vcode.active_code.equals(vc.active_code)){
 			vcode.active_code = vc.active_code;
 		}
-		if(!vcode.verify_email_code.equals(vc.verify_email_code)){
+		if(vcode.verify_email_code == null || !vcode.verify_email_code.equals(vc.verify_email_code)){
 			vcode.verify_email_code = vc.verify_email_code;
 		}
-		if(!vcode.verify_mobile_code.equals(vc.verify_mobile_code)){
+		if(vcode.verify_mobile_code == null || !vcode.verify_mobile_code.equals(vc.verify_mobile_code)){
 			vcode.verify_mobile_code = vc.verify_mobile_code;
 		}
 		vcode.update();
@@ -120,6 +123,14 @@ public class VerifyCode extends Model {
 	 */
 	public static String getVerify_Mobile_Code(String username){
 		return getVCByUsername(username).verify_mobile_code;
+	}
+	
+	/**
+	 * 删除该用户的验证码
+	 * @param username
+	 */
+	public static void deleteVerifyCode(String username){
+		Ebean.delete(find.where().eq("username", username).findList());
 	}
 
 }
