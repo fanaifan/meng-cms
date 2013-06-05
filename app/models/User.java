@@ -1,8 +1,10 @@
-package models.user;
+package models;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import play.Logger;
@@ -10,8 +12,7 @@ import play.db.ebean.Model;
 import utils.SendUtils;
 import utils.StringUtils;
 
-@Entity
-@Table(name="user")
+
 /**
  * 会员管理<br>
  * 1.注册功能
@@ -25,6 +26,8 @@ import utils.StringUtils;
  * @author zhangpeng
  *
  */
+@Entity
+@Table(name="user")
 public class User extends Model {
 	
 	/**
@@ -35,51 +38,61 @@ public class User extends Model {
 	/**
 	 * 用户ID
 	 */
-	public long uid;
+	@Id
+	public long id;
 	
 	/**
 	 * 用户名
 	 */
+	@Column
 	public String username;
 	
 	/**
 	 * 密码
 	 */
+	@Column
 	public String password;
 	
 	/**
 	 * 电子邮箱
 	 */
+	@Column
 	public String email;
 	
 	/**
 	 * 验证邮箱
 	 */
+	@Column
 	public boolean verify_email = false;
 	
 	/**
 	 * 移动电话
 	 */
+	@Column
 	public String mobile;
 	
 	/**
 	 * 验证移动电话
 	 */
+	@Column
 	public boolean verify_mobile = false;
 	
 	/**
 	 * 身份证号
 	 */
+	@Column
 	public String id_num;
 	
 	/**
 	 * 真实姓名
 	 */
+	@Column
 	public String real_name;
 	
 	/**
 	 * 激活状态和暂停用户(新注册用户默认为不可用)
 	 */
+	@Column
 	public boolean status = false;
 	
 	public static Model.Finder<Long, User> find = new Model.Finder<Long, User>(Long.class, User.class);

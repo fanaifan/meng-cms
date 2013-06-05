@@ -1,0 +1,6 @@
+#Message
+user.active.subject=用户激活
+user.active.msg=您好, {0} 欢迎您注册 {1} ,请点击链接 {2} 激活
+
+#Error Message
+error.email.send=发送电子邮箱失败

@@ -1,12 +1,13 @@
-package models.user;
+package models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import play.db.ebean.Model;
 
-@Entity
-@Table(name="verifycode")
+
 /**
  * 验证码列表
  * 1.用户验证码
@@ -15,6 +16,8 @@ import play.db.ebean.Model;
  * @author zhangpeng
  *
  */
+@Entity
+@Table(name="verifycode")
 public class VerifyCode extends Model {
 	
 	/**
@@ -25,26 +28,31 @@ public class VerifyCode extends Model {
 	/**
 	 * 验证码ID
 	 */
+	@Id
 	public long id;
 	
 	/**
 	 * 用户名
 	 */
+	@Column
 	public String username;
 	
 	/**
 	 * 用户验证码
 	 */
+	@Column
 	public String active_code;
 	
 	/**
 	 * 邮箱验证码
 	 */
+	@Column
 	public String verify_email_code;
 	
 	/**
 	 * 移动电话验证码
 	 */
+	@Column
 	public String verify_mobile_code;
 	
 	public static Model.Finder<Long, VerifyCode> find = new Model.Finder<Long, VerifyCode>(Long.class, VerifyCode.class);

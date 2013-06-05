@@ -2,11 +2,17 @@ package utils;
 
 import java.util.List;
 
-import models.user.User;
-import models.user.VerifyCode;
+import models.User;
+import models.VerifyCode;
 
+import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.Email;
+import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.HtmlEmail;
 import org.apache.commons.mail.SimpleEmail;
+
+import play.Logger;
+import play.i18n.Messages;
 
 
 /**
@@ -24,9 +30,22 @@ public class SendUtils {
 	 * @param email
 	 * @param subject
 	 * @param content
+	 * @throws EmailException 
 	 */
-	public static void mail(String email, String subject, String content){
-		Email mail = new SimpleEmail();
+	public static void mail(String uemail, String subject, String content) throws EmailException{
+		Email email = new SimpleEmail();
+		email.setHostName(AppConfig.Email_Host);
+		email.setSmtpPort(AppConfig.Email_Port);
+		email.setAuthenticator(new DefaultAuthenticator(AppConfig.Email_Username, AppConfig.Email_Password));
+		email.setSSLOnConnect(true);
+		email.setFrom(AppConfig.Email_Email,AppConfig.Eamil_ShowName);
+		email.setSubject(subject);
+		email.setMsg(content);
+		email.addTo(uemail);
+		email.send();
+		//TODO 邮件发送日志
+		//TODO 定期重发邮件
+
 	}
 	
 	/**
@@ -34,12 +53,45 @@ public class SendUtils {
 	 * @param email
 	 * @param subject
 	 * @param content
+	 * @throws EmailException 
 	 */
-	public static void mail(List<String> email, String subject, String content){
+	public static void mail(List<String> email, String subject, String content) throws EmailException{
+		for(String uemail:email){
+			mail(uemail, subject, content);
+		}
+	}
+	
+	/**
+	 * 发送电子邮件带附件(单封)
+	 * @param email
+	 * @param subject
+	 * @param content
+	 */
+	public static void mailWithAttachment(String email,String subject, String content ){
 		
 	}
 	
-	
+	/**
+	 * 发送电子邮件HTML格式(单封)
+	 * @param uemail
+	 * @param subject
+	 * @param htmlMsg
+	 * @param textMsg
+	 * @throws EmailException
+	 */
+	public static void mailHtml(String uemail, String subject, String htmlMsg, String textMsg) throws EmailException{
+		HtmlEmail email = new HtmlEmail();
+		email.setHostName(AppConfig.Email_Host);
+		email.setSmtpPort(AppConfig.Email_Port);
+		email.setAuthenticator(new DefaultAuthenticator(AppConfig.Email_Username, AppConfig.Email_Password));
+		email.setSSLOnConnect(true);
+		email.addTo(uemail);
+		email.setFrom(AppConfig.Email_Email, AppConfig.Eamil_ShowName);
+		email.setSubject(subject);
+		email.setHtmlMsg(htmlMsg);
+		email.setTextMsg(textMsg);
+		email.send();
+	}
 	
 	/**
 	 * 保存生成出来的验证码
@@ -74,7 +126,15 @@ public class SendUtils {
 	 */
 	public static void mail_active_user(String email){
 		String code = saveVerifyCode(email,"A");
-		//TODO 模板发送code
+		String emailSubject = Messages.get("user.active.subject", "");
+		String emailContent = Messages.get("user.active.msg", User.getUserByEmail(email).username, AppConfig.WebSiteName, code);
+		try {
+			mail(email, emailSubject, emailContent);
+			Logger.info("email sent ...");
+		} catch (EmailException e) {
+			Logger.info(Messages.get("error.mail.send", ""));
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -82,7 +142,7 @@ public class SendUtils {
 	 * @param email
 	 */
 	public static void mail_verify_email(String email){
-		String code = saveVerifyCode(email,"E");
+//		String code = saveVerifyCode(email,"E");
 	}
 	
 	/**
@@ -90,6 +150,6 @@ public class SendUtils {
 	 * @param mobile
 	 */
 	public static void sms_verify_mobile(String mobile){
-		String code = saveVerifyCode(mobile,"M");
+//		String code = saveVerifyCode(mobile,"M");
 	}
 }
