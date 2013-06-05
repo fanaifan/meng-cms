@@ -3,6 +3,9 @@ package utils;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 
+import play.api.i18n.Lang;
+import play.i18n.Messages;
+
 
 
 /**
@@ -30,5 +33,9 @@ public class StringUtils {
 	 */
 	public static String get_verifycode(){
 		return RandomStringUtils.randomAlphabetic(10);
+	}
+	
+	public static String readMessage(){
+		return Messages.get(new Lang("zh-CN", null), "user.active.msg", "");
 	}
 }

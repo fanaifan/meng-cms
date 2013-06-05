@@ -40,6 +40,7 @@ public class SendUtils {
 		email.setSSLOnConnect(true);
 		email.setFrom(AppConfig.Email_Email,AppConfig.Eamil_ShowName);
 		email.setSubject(subject);
+		email.setCharset("utf-8");
 		email.setMsg(content);
 		email.addTo(uemail);
 		email.send();
@@ -87,6 +88,7 @@ public class SendUtils {
 		email.setSSLOnConnect(true);
 		email.addTo(uemail);
 		email.setFrom(AppConfig.Email_Email, AppConfig.Eamil_ShowName);
+		email.setCharset("utf-8");
 		email.setSubject(subject);
 		email.setHtmlMsg(htmlMsg);
 		email.setTextMsg(textMsg);
@@ -127,9 +129,9 @@ public class SendUtils {
 	public static void mail_active_user(String email){
 		String code = saveVerifyCode(email,"A");
 		String emailSubject = Messages.get("user.active.subject", "");
-		String emailContent = Messages.get("user.active.msg", User.getUserByEmail(email).username, AppConfig.WebSiteName, code);
+//		String emailContent = Messages.get("user.active.msg", User.getUserByEmail(email).username, AppConfig.WebSiteName, code);
 		try {
-			mail(email, emailSubject, emailContent);
+			mail(email, emailSubject, StringUtils.readMessage());
 			Logger.info("email sent ...");
 		} catch (EmailException e) {
 			Logger.info(Messages.get("error.mail.send", ""));
