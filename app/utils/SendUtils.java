@@ -2,8 +2,8 @@ package utils;
 
 import java.util.List;
 
-import models.User;
-import models.VerifyCode;
+import models.user.User;
+import models.verify.VerifyCode;
 
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.Email;

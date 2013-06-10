@@ -17,5 +17,8 @@ login.password.error=用户密码错误
 login.user.nothing=用户信息不存在
 login.user.disable=用户不可用或者没有激活
 
+#Admin User Management
+admin.user.reg.error=创建管理员失败
+
 #Error Message
 error.email.send=发送电子邮箱失败

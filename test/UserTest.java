@@ -1,14 +1,20 @@
+import static org.fest.assertions.Assertions.assertThat;
 import static play.test.Helpers.fakeApplication;
 import static play.test.Helpers.inMemoryDatabase;
 import static play.test.Helpers.running;
 import static play.test.Helpers.testServer;
-import static org.fest.assertions.Assertions.*;
-import models.User;
-import models.VerifyCode;
+import models.user.User;
+import models.verify.VerifyCode;
 
 import org.junit.Test;
 
+import utils.StringUtils;
 
+/**
+ * 测试会员管理
+ * @author zhangpeng
+ *
+ */
 public class UserTest {
 	
 	@Test
@@ -59,6 +65,17 @@ public class UserTest {
 				User.verify_email("zp8360@sina.com");
 				User.verify_email(username, VerifyCode.getVerify_Email_Code(username));
 				assertThat(true == User.getUserByName(username).verify_email);
+				
+				/**
+				 * 测试修改密码
+				 */
+				User.modifyUserPassword(username, "123456");
+				assertThat(StringUtils.md5("123456").equals(User.getUserByName(username).password));
+				
+				/**
+				 * 测试查询分页
+				 */
+				assertThat(User.getUserByPage(0, 1).size() == 1);
 			}
 
 		});

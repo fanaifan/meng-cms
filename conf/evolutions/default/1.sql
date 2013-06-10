@@ -3,6 +3,18 @@
 
 # --- !Ups
 
+create table adminuser (
+  id                        bigint not null,
+  username                  varchar(255),
+  password                  varchar(255),
+  email                     varchar(255),
+  mobile                    varchar(255),
+  real_name                 varchar(255),
+  privilege                 varchar(255),
+  status                    boolean,
+  constraint pk_adminuser primary key (id))
+;
+
 create table user (
   id                        bigint not null,
   username                  varchar(255),
@@ -26,6 +38,8 @@ create table verifycode (
   constraint pk_verifycode primary key (id))
 ;
 
+create sequence adminuser_seq;
+
 create sequence user_seq;
 
 create sequence verifycode_seq;
@@ -37,11 +51,15 @@ create sequence verifycode_seq;
 
 SET REFERENTIAL_INTEGRITY FALSE;
 
+drop table if exists adminuser;
+
 drop table if exists user;
 
 drop table if exists verifycode;
 
 SET REFERENTIAL_INTEGRITY TRUE;
+
+drop sequence if exists adminuser_seq;
 
 drop sequence if exists user_seq;
 

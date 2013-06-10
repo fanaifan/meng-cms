@@ -1,4 +1,4 @@
-package models;
+package models.verify;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

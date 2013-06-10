@@ -1,4 +1,4 @@
-package models;
+package models.user;
 
 import java.util.List;
 
@@ -7,13 +7,14 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.avaje.ebean.Ebean;
-
+import models.verify.VerifyCode;
 import play.Logger;
 import play.db.ebean.Model;
 import play.i18n.Messages;
 import utils.SendUtils;
 import utils.StringUtils;
+
+import com.avaje.ebean.Ebean;
 
 
 /**
