@@ -3,7 +3,7 @@ import static play.test.Helpers.fakeApplication;
 import static play.test.Helpers.inMemoryDatabase;
 import static play.test.Helpers.running;
 import static play.test.Helpers.testServer;
-import models.admin.AdminUser;
+import models.AdminUser;
 
 import org.junit.Test;
 

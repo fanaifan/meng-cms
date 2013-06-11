@@ -1,4 +1,4 @@
-package models.advertising;
+package models;
 
 import com.avaje.ebean.Ebean;
 

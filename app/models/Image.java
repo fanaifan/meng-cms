@@ -1,4 +1,4 @@
-package models.image;
+package models;
 
 import com.avaje.ebean.Ebean;
 

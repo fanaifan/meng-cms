@@ -1,4 +1,4 @@
-package models.article;
+package models;
 
 import java.util.List;
 
